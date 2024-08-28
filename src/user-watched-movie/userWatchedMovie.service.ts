@@ -31,10 +31,9 @@ export class UserWatchedMovieService {
       throw new Error('User not found');
     }
 
-    const existingWatchedMovie =
-      await this.userWatchedMovieRepository.findOne({
-        where: { user, movieId },
-      });
+    const existingWatchedMovie = await this.userWatchedMovieRepository.findOne({
+      where: { user, movieId },
+    });
 
     if (existingWatchedMovie) {
       return;
@@ -58,10 +57,9 @@ export class UserWatchedMovieService {
       throw new Error('User not found');
     }
 
-    const existingWatchedMovie =
-      await this.userWatchedMovieRepository.findOne({
-        where: { user, movieId },
-      });
+    const existingWatchedMovie = await this.userWatchedMovieRepository.findOne({
+      where: { user, movieId },
+    });
 
     if (!existingWatchedMovie) {
       return;

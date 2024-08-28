@@ -31,7 +31,7 @@ config();
     AuthModule,
     UserFavoriteGenreModule,
     UserFavoriteMovieModule,
-    UserWatchedMovieModule
+    UserWatchedMovieModule,
   ],
   controllers: [],
   providers: [],
