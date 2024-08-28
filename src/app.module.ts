@@ -7,6 +7,7 @@ import { config } from 'dotenv';
 import { AuthModule } from './auth/auth.module';
 import { UserFavoriteGenreModule } from './user-genre/userFavoriteGenre.module';
 import { UserFavoriteMovieModule } from './user-movie/userFavoriteMovie.module';
+import { UserWatchedMovieModule } from './user-watched-movie/userWatchedMovie.module';
 config();
 
 @Module({
@@ -29,7 +30,8 @@ config();
     UserModule,
     AuthModule,
     UserFavoriteGenreModule,
-    UserFavoriteMovieModule
+    UserFavoriteMovieModule,
+    UserWatchedMovieModule
   ],
   controllers: [],
   providers: [],
