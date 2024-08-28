@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserFavoriteMovie } from './userFavoriteMovie.entity';
-import { UserWatchedMovie } from './userWatchedMovie.entity';
-import { UserFavoriteGenre } from './userFavoriteGenre.entity';
+import { UserFavoriteMovie } from '../user-movie/userFavoriteMovie.entity';
+import { UserWatchedMovie } from '../user-watched-movie/userWatchedMovie.entity';
+import { UserFavoriteGenre } from '../user-genre/userFavoriteGenre.entity';
 
 @Entity()
 export class User {
