@@ -1,7 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserFavoriteMovie } from '../user-movie/userFavoriteMovie.entity';
-import { UserWatchedMovie } from '../user-watched-movie/userWatchedMovie.entity';
-import { UserFavoriteGenre } from '../user-genre/userFavoriteGenre.entity';
+import { FavoriteMovie } from '../movie/favoriteMovie.entity';
+import { FavoriteGenre } from 'src/genre/favoriteGenre.entity';
 
 @Entity()
 export class User {
@@ -14,23 +13,11 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(
-    () => UserFavoriteMovie,
-    (userFavoriteMovie) => userFavoriteMovie.user,
-  )
-  favoriteMovies: UserFavoriteMovie[];
+  @OneToMany(() => FavoriteMovie, (favoriteMovie) => favoriteMovie.user)
+  favoriteMovies: FavoriteMovie[];
 
-  @OneToMany(
-    () => UserFavoriteGenre,
-    (userFavoriteGenre) => userFavoriteGenre.user,
-  )
-  favoriteGenres: UserFavoriteGenre[];
-
-  @OneToMany(
-    () => UserWatchedMovie,
-    (userWatchedMovie) => userWatchedMovie.user,
-  )
-  watchedMovies: UserWatchedMovie[];
+  @OneToMany(() => FavoriteGenre, (favoriteGenre) => favoriteGenre.user)
+  favoriteGenres: FavoriteGenre[];
 }
 
-export { UserFavoriteMovie, UserFavoriteGenre, UserWatchedMovie };
+export { FavoriteMovie, FavoriteGenre };

@@ -2,13 +2,13 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 import { User } from '../user/user.entity';
 
 @Entity()
-export class UserWatchedMovie {
+export class FavoriteGenre {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.watchedMovies, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.favoriteGenres, { onDelete: 'CASCADE' })
   user: User;
 
   @Column()
-  movieId: number;
+  genreId: number;
 }

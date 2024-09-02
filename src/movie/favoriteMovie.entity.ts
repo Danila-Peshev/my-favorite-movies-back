@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 import { User } from '../user/user.entity';
 
 @Entity()
-export class UserFavoriteMovie {
+export class FavoriteMovie {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,4 +11,7 @@ export class UserFavoriteMovie {
 
   @Column()
   movieId: number;
+
+  @Column()
+  isWatched: boolean = false;
 }
