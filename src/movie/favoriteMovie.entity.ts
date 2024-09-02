@@ -13,5 +13,5 @@ export class FavoriteMovie {
   movieId: number;
 
   @Column()
-  isWatched: boolean = false;
+  isWatched: boolean;
 }
