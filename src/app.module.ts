@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { config } from 'dotenv';
-import { join } from 'path';
-config();
+import dataSourceOptions from './data-source-options.config';
+import { FavoriteGenreModule } from './genre/favorite-genre.module';
+import { FavoriteMovieModule } from './movie/favorite-movie.module';
 
 @Module({
   imports: [
@@ -12,18 +12,13 @@ config();
       envFilePath: ['.env', '.env.example'],
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      entities: [join(__dirname, '**', '*.entity.{ts, js}')],
-      migrations: [join(__dirname, 'migrations', '*.{ts, js}')],
+      ...dataSourceOptions,
       autoLoadEntities: true,
       synchronize: false,
     }),
     UserModule,
+    FavoriteGenreModule,
+    FavoriteMovieModule,
   ],
   controllers: [],
   providers: [],

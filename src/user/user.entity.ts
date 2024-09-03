@@ -1,6 +1,7 @@
+import { FavoriteGenre } from 'src/genre/favorite-genre.entity';
+import { FavoriteMovie } from 'src/movie/favorite-movie.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { FavoriteMovie } from '../movie/favoriteMovie.entity';
-import { FavoriteGenre } from 'src/genre/favoriteGenre.entity';
+
 
 @Entity()
 export class User {

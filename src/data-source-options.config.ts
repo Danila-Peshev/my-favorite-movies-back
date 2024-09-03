@@ -1,9 +1,9 @@
-import { join } from 'path';
-import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
+import { join } from 'path';
+import { DataSourceOptions } from 'typeorm';
 config();
 
-const AppDataSource = new DataSource({
+const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
@@ -12,14 +12,6 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   entities: ['dist/**/*.entity.{ts, js}'],
   migrations: [join(__dirname, 'migrations', '*.{ts, js}')],
-});
+};
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
-    console.error('Error during Data Source initialization', err);
-  });
-
-export default AppDataSource;
+export default dataSourceOptions;
