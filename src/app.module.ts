@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import dataSourceOptions from './data-source-options.config';
 import { FavoriteGenreModule } from './genre/favorite-genre.module';
 import { FavoriteMovieModule } from './movie/favorite-movie.module';
+import { MoviesModule } from './tmdb-movie/movies.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { FavoriteMovieModule } from './movie/favorite-movie.module';
     UserModule,
     FavoriteGenreModule,
     FavoriteMovieModule,
+    MoviesModule
   ],
   controllers: [],
   providers: [],
