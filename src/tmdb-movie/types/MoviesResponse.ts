@@ -1,8 +1,8 @@
-import { SimpleMovie } from "./SimpleMovie";
+import { BaseMovie } from "./BaseMovie";
 
 export type MoviesResponse = {
   page: number;
-  results: SimpleMovie[];
+  results: BaseMovie[];
   totalPages: number;
   totalResult: number;
 }

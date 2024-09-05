@@ -1,12 +1,13 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { lastValueFrom, map, Observable } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, throwError } from 'rxjs';
 import { Language } from './types/Language';
 import { MAX_MOVIES_ON_PAGE } from './constants/movies-constants';
 import { MoviesResponse } from './types/MoviesResponse';
 import { Genre } from './types/Genre';
 import { Movie } from './types/Movie';
-import { SimpleMovie } from './types/SimpleMovie';
+import { BaseMovie } from './types/BaseMovie';
+import { AxiosError } from 'axios';
 
 @Injectable()
 export class MoviesService {
@@ -18,7 +19,21 @@ export class MoviesService {
   ): Promise<Observable<any>> {
     return this.httpService
       .get(endpoint, { params })
-      .pipe(map((response) => response.data));
+      .pipe(
+        map((response) => response.data),
+        catchError((error: AxiosError) => {
+          if (error.code === "ECONNABORTED") {
+            return throwError(() => new Error("Request timed out"));
+          }
+          if (error.response) {
+            return throwError(() => new Error("Status not 200"));
+          } else if (error.request) {
+            return throwError(() => new Error("Network Error"));
+          } else {
+            return throwError(() => new Error(`Request Error: ${error.message}`));
+          }
+        })
+      );
   }
 
   async getAllGenres({
@@ -133,7 +148,7 @@ export class MoviesService {
   }: {
     id: number;
     language?: Language;
-  }): Promise<SimpleMovie> {
+  }): Promise<BaseMovie> {
     return lastValueFrom(
       (await this.fetchFromApi(`/movie/${id}`, { language })).pipe(
         map((result) => {

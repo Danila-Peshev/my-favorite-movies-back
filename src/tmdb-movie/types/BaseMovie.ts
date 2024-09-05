@@ -1,4 +1,4 @@
-export type SimpleMovie = {
+export type BaseMovie = {
   id: number
   backdropPath: string
   genreIds: number[]
