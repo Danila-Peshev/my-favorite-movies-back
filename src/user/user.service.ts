@@ -18,21 +18,21 @@ export class UserService {
     return await this.userRepository.findOneBy({ email });
   }
 
-  async findAllGenresByUserId(userId: number): Promise<FavoriteGenre[]> {
+  async findUserGenres(userId: number): Promise<FavoriteGenre[]> {
     const genres: FavoriteGenre[] = await this.genreRepository.findBy({
       user: { id: userId },
     });
     return genres;
   }
 
-  async findAllMoviesByUserId(userId: number): Promise<FavoriteMovie[]> {
+  async findUserMovies(userId: number): Promise<FavoriteMovie[]> {
     const movies: FavoriteMovie[] = await this.movieRepository.findBy({
       user: { id: userId },
     });
     return movies;
   }
 
-  async addGenreIdToUserByUserId(
+  async addUserGenre(
     userId: number,
     genreId: number,
   ): Promise<FavoriteGenre> {
@@ -49,7 +49,7 @@ export class UserService {
     }
   }
 
-  async removeGenreIdToUserByUserId(
+  async removeUserGenre(
     userId: number,
     genreId: number,
   ): Promise<string> {
@@ -62,7 +62,7 @@ export class UserService {
     }
   }
 
-  async addMovieIdToUserByUserId(
+  async addUserMovie(
     userId: number,
     movieId: number,
   ): Promise<FavoriteMovie> {
@@ -80,7 +80,7 @@ export class UserService {
     }
   }
 
-  async removeMovieIdToUserByUserId(
+  async removeUserMovie(
     userId: number,
     movieId: number,
   ): Promise<string> {
@@ -93,7 +93,7 @@ export class UserService {
     }
   }
 
-  async watchByMovieIdToUserByUserId(
+  async toggleUserMovie(
     userId: number,
     movieId: number,
   ): Promise<FavoriteMovie> {
@@ -102,20 +102,10 @@ export class UserService {
     });
     if (existingFavoriteMovie) {
       existingFavoriteMovie.isWatched = true;
-      return await this.movieRepository.save(existingFavoriteMovie);
+    } else {
+      existingFavoriteMovie.isWatched = false;
     }
+    return await this.movieRepository.save(existingFavoriteMovie);
   }
 
-  async unWatchByMovieIdToUserByUserId(
-    userId: number,
-    movieId: number,
-  ): Promise<FavoriteMovie> {
-    const existingFavoriteMovie = await this.movieRepository.findOne({
-      where: { user: { id: userId }, movieId },
-    });
-    if (existingFavoriteMovie) {
-      existingFavoriteMovie.isWatched = false;
-      return await this.movieRepository.save(existingFavoriteMovie);
-    }
-  }
 }

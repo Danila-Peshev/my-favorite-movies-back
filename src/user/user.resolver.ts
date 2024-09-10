@@ -8,67 +8,57 @@ export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query(() => [FavoriteGenre])
-  async getAllGenresByUserId(
+  async getUserGenres(
     @Args('userId', { type: () => Int }) userId: number,
   ) {
-    return (await this.userService.findAllGenresByUserId(userId)) || [];
+    return (await this.userService.findUserGenres(userId)) || [];
   }
 
   @Query(() => [FavoriteMovie])
-  async getAllMoviesByUserId(
+  async getUserMovies(
     @Args('userId', { type: () => Int }) userId: number,
   ) {
-    return await this.userService.findAllMoviesByUserId(userId);
+    return await this.userService.findUserMovies(userId);
   }
 
   @Mutation(() => FavoriteGenre)
-  async addGenreIdToUserByUserId(
+  async addUserGenre(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('genreId', { type: () => Int }) genreId: number,
   ) {
-    return await this.userService.addGenreIdToUserByUserId(userId, genreId);
+    return await this.userService.addUserGenre(userId, genreId);
   }
 
   @Mutation(() => GraphQLString)
-  async removeGenreIdToUserByUserId(
+  async removeUserGenre(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('genreId', { type: () => Int }) genreId: number,
   ) {
-    return await this.userService.removeGenreIdToUserByUserId(userId, genreId);
+    return await this.userService.removeUserGenre(userId, genreId);
   }
 
   @Mutation(() => FavoriteMovie)
-  async addMovieIdToUserByUserId(
+  async addUserMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.addMovieIdToUserByUserId(userId, movieId);
+    return await this.userService.addUserMovie(userId, movieId);
   }
 
   @Mutation(() => GraphQLString)
-  async removeMovieIdToUserByUserId(
+  async removeUserMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.removeMovieIdToUserByUserId(userId, movieId);
+    return await this.userService.removeUserMovie(userId, movieId);
   }
 
   @Mutation(() => FavoriteMovie)
-  async watchByMovieIdToUserByUserId(
+  async toggleUserMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.watchByMovieIdToUserByUserId(userId, movieId);
+    return await this.userService.toggleUserMovie(userId, movieId);
   }
 
-  @Mutation(() => FavoriteMovie)
-  async unWatchByMovieIdToUserByUserId(
-    @Args('userId', { type: () => Int }) userId: number,
-    @Args('movieId', { type: () => Int }) movieId: number,
-  ) {
-    return await this.userService.unWatchByMovieIdToUserByUserId(
-      userId,
-      movieId,
-    );
-  }
 }
