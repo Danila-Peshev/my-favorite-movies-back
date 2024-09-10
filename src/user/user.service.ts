@@ -10,19 +10,10 @@ export class UserService {
     private userRepository: Repository<User>,
     @InjectRepository(FavoriteMovie)
     private movieRepository: Repository<FavoriteMovie>,
-    @InjectRepository(FavoriteGenre)
-    private genreRepository: Repository<FavoriteGenre>,
   ) {}
 
   async findByEmail(email: string): Promise<User> {
     return await this.userRepository.findOneBy({ email });
-  }
-
-  async findUserGenres(userId: number): Promise<FavoriteGenre[]> {
-    const genres: FavoriteGenre[] = await this.genreRepository.findBy({
-      user: { id: userId },
-    });
-    return genres;
   }
 
   async findUserMovies(userId: number): Promise<FavoriteMovie[]> {
@@ -30,36 +21,6 @@ export class UserService {
       user: { id: userId },
     });
     return movies;
-  }
-
-  async addUserGenre(
-    userId: number,
-    genreId: number,
-  ): Promise<FavoriteGenre> {
-    const user: User = await this.userRepository.findOneBy({ id: userId });
-    const existingFavoriteGenre = await this.genreRepository.findOne({
-      where: { user: { id: userId }, genreId },
-    });
-    if (!existingFavoriteGenre) {
-      const newFavoriteGenre = this.genreRepository.create({
-        user,
-        genreId,
-      });
-      return await this.genreRepository.save(newFavoriteGenre);
-    }
-  }
-
-  async removeUserGenre(
-    userId: number,
-    genreId: number,
-  ): Promise<string> {
-    const existingFavoriteGenre = await this.genreRepository.findOne({
-      where: { user: { id: userId }, genreId },
-    });
-    if (existingFavoriteGenre) {
-      await this.genreRepository.delete({ genreId });
-      return 'Genre has been removed';
-    }
   }
 
   async addUserMovie(
