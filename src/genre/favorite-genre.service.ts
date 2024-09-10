@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FavoriteGenre } from './favorite-genre.entity';
+import { MutationResult } from 'src/mutation-response-classes/MutationResult';
 
 @Injectable()
 export class GenreService {
@@ -35,14 +36,15 @@ export class GenreService {
   async removeUserGenre(
     userId: number,
     genreId: number,
-  ): Promise<string> {
+  ): Promise<MutationResult> {
     const existingFavoriteGenre = await this.genreRepository.findOne({
       where: { user: { id: userId }, genreId },
     });
     if (existingFavoriteGenre) {
       await this.genreRepository.delete({ genreId });
-      return 'Genre has been removed';
+      return {success: true};
     }
+    return {success: false}
   }
 
 }

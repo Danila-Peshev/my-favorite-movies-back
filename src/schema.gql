@@ -23,6 +23,10 @@ type User {
   favoriteGenres: [FavoriteGenre!]!
 }
 
+type MutationResult {
+  success: Boolean!
+}
+
 type GenreGQL {
   id: Int!
   name: String!
@@ -60,8 +64,8 @@ type Query {
 
 type Mutation {
   addUserGenre(userId: Int!, genreId: Int!): FavoriteGenre!
-  removeUserGenre(userId: Int!, genreId: Int!): String!
+  removeUserGenre(userId: Int!, genreId: Int!): MutationResult!
   addUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
-  removeUserMovie(userId: Int!, movieId: Int!): String!
+  removeUserMovie(userId: Int!, movieId: Int!): MutationResult!
   toggleUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
 }

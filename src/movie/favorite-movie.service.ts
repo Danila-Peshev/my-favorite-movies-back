@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FavoriteMovie } from './favorite-movie.entity';
+import { MutationResult } from 'src/mutation-response-classes/MutationResult';
 
 @Injectable()
 export class MovieService {
@@ -30,14 +31,15 @@ export class MovieService {
     }
   }
 
-  async removeUserMovie(userId: number, movieId: number): Promise<string> {
+  async removeUserMovie(userId: number, movieId: number): Promise<MutationResult> {
     const existingFavoriteMovie = await this.movieRepository.findOne({
       where: { user: { id: userId }, movieId },
     });
     if (existingFavoriteMovie) {
       await this.movieRepository.delete({ movieId });
-      return 'Movie has been removed';
+      return {success: true};
     }
+    return {success: false}
   }
 
   async toggleUserMovie(

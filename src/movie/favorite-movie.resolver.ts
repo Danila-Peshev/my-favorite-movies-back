@@ -2,6 +2,7 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLString } from 'graphql';
 import { MovieService } from './favorite-movie.service';
 import { FavoriteMovie } from './favorite-movie.entity';
+import { MutationResult } from 'src/mutation-response-classes/MutationResult';
 
 @Resolver('Movie')
 export class MovieResolver {
@@ -20,7 +21,7 @@ export class MovieResolver {
     return await this.movieService.addUserMovie(userId, movieId);
   }
 
-  @Mutation(() => GraphQLString)
+  @Mutation(() => MutationResult)
   async removeUserMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
