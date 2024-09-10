@@ -1,0 +1,68 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FavoriteGenre {
+  id: Int!
+  user: User!
+  genreId: Float!
+}
+
+type FavoriteMovie {
+  id: Int!
+  user: User!
+  movieId: Float!
+  isWatched: Boolean!
+}
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  favoriteMovies: [FavoriteMovie!]!
+  favoriteGenres: [FavoriteGenre!]!
+}
+
+type GenreGQL {
+  id: Int!
+  name: String!
+}
+
+type BaseMovieGQL {
+  id: Int!
+  backdropPath: String!
+  genreIds: [Int!]!
+  overview: String!
+  popularity: Int!
+  posterPath: String!
+  releaseDate: String!
+  title: String!
+  voteAverage: Int!
+  voteCount: Int!
+}
+
+type MoviesResponseGQL {
+  page: Int!
+  results: [BaseMovieGQL!]!
+  totalPages: Int!
+  totalResult: Int!
+}
+
+type Query {
+  getAllGenresByUserId(userId: Int!): [FavoriteGenre!]!
+  getAllMoviesByUserId(userId: Int!): [FavoriteMovie!]!
+  getAllGenres(language: String): [GenreGQL!]!
+  getMoviesByFilters(language: String, genreIds: [Int!], minCountVotes: Int, releaseYear: Int, page: Int): MoviesResponseGQL!
+  getFavoriteMoviesByIds(ids: [Int!]!, language: String, page: Int): MoviesResponseGQL!
+  getMovieById(id: Int!, language: String): BaseMovieGQL!
+  login(email: String!, password: String!): User!
+}
+
+type Mutation {
+  addGenreIdToUserByUserId(userId: Int!, genreId: Int!): FavoriteGenre!
+  removeGenreIdToUserByUserId(userId: Int!, genreId: Int!): String!
+  addMovieIdToUserByUserId(userId: Int!, movieId: Int!): FavoriteMovie!
+  removeMovieIdToUserByUserId(userId: Int!, movieId: Int!): String!
+  watchByMovieIdToUserByUserId(userId: Int!, movieId: Int!): FavoriteMovie!
+  unWatchByMovieIdToUserByUserId(userId: Int!, movieId: Int!): FavoriteMovie!
+}

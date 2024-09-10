@@ -17,23 +17,21 @@ export class MoviesService {
     endpoint: string,
     params: object,
   ): Promise<Observable<any>> {
-    return this.httpService
-      .get(endpoint, { params })
-      .pipe(
-        map((response) => response.data),
-        catchError((error: AxiosError) => {
-          if (error.code === "ECONNABORTED") {
-            return throwError(() => new Error("Request timed out"));
-          }
-          if (error.response) {
-            return throwError(() => new Error("Status not 200"));
-          } else if (error.request) {
-            return throwError(() => new Error("Network Error"));
-          } else {
-            return throwError(() => new Error(`Request Error: ${error.message}`));
-          }
-        })
-      );
+    return this.httpService.get(endpoint, { params }).pipe(
+      map((response) => response.data),
+      catchError((error: AxiosError) => {
+        if (error.code === 'ECONNABORTED') {
+          return throwError(() => new Error('Request timed out'));
+        }
+        if (error.response) {
+          return throwError(() => new Error('Status not 200'));
+        } else if (error.request) {
+          return throwError(() => new Error('Network Error'));
+        } else {
+          return throwError(() => new Error(`Request Error: ${error.message}`));
+        }
+      }),
+    );
   }
 
   async getAllGenres({
@@ -74,13 +72,12 @@ export class MoviesService {
       'vote_count.gte': minCountVotes,
       primary_release_year: releaseYear,
     });
-
     return lastValueFrom(
       data.pipe(
         map((result) => {
           return {
             page: result.page,
-            results: result.map(
+            results: result.results.map(
               ({
                 id,
                 backdrop_path,
