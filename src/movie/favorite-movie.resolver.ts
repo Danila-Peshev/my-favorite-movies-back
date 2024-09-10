@@ -1,17 +1,15 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserService } from './user.service';
-import { FavoriteGenre, FavoriteMovie, User } from './user.entity';
 import { GraphQLString } from 'graphql';
+import { MovieService } from './favorite-movie.service';
+import { FavoriteMovie } from './favorite-movie.entity';
 
-@Resolver('User')
-export class UserResolver {
-  constructor(private userService: UserService) {}
+@Resolver('Movie')
+export class MovieResolver {
+  constructor(private movieService: MovieService) {}
 
   @Query(() => [FavoriteMovie])
-  async getUserMovies(
-    @Args('userId', { type: () => Int }) userId: number,
-  ) {
-    return await this.userService.findUserMovies(userId);
+  async getUserMovies(@Args('userId', { type: () => Int }) userId: number) {
+    return await this.movieService.findUserMovies(userId);
   }
 
   @Mutation(() => FavoriteMovie)
@@ -19,7 +17,7 @@ export class UserResolver {
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.addUserMovie(userId, movieId);
+    return await this.movieService.addUserMovie(userId, movieId);
   }
 
   @Mutation(() => GraphQLString)
@@ -27,7 +25,7 @@ export class UserResolver {
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.removeUserMovie(userId, movieId);
+    return await this.movieService.removeUserMovie(userId, movieId);
   }
 
   @Mutation(() => FavoriteMovie)
@@ -35,7 +33,6 @@ export class UserResolver {
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.userService.toggleUserMovie(userId, movieId);
+    return await this.movieService.toggleUserMovie(userId, movieId);
   }
-
 }

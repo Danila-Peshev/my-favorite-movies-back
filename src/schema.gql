@@ -49,8 +49,8 @@ type MoviesResponseGQL {
 }
 
 type Query {
-  getUserMovies(userId: Int!): [FavoriteMovie!]!
   getUserGenres(userId: Int!): [FavoriteGenre!]!
+  getUserMovies(userId: Int!): [FavoriteMovie!]!
   getAllGenres(language: String): [GenreGQL!]!
   getMoviesByFilters(language: String, genreIds: [Int!], minCountVotes: Int, releaseYear: Int, page: Int): MoviesResponseGQL!
   getFavoriteMoviesByIds(ids: [Int!]!, language: String, page: Int): MoviesResponseGQL!
@@ -59,9 +59,9 @@ type Query {
 }
 
 type Mutation {
+  addUserGenre(userId: Int!, genreId: Int!): FavoriteGenre!
+  removeUserGenre(userId: Int!, genreId: Int!): String!
   addUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
   removeUserMovie(userId: Int!, movieId: Int!): String!
   toggleUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
-  addUserGenre(userId: Int!, genreId: Int!): FavoriteGenre!
-  removeUserGenre(userId: Int!, genreId: Int!): String!
 }
