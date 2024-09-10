@@ -11,10 +11,9 @@ export class MovieService {
   ) {}
 
   async findUserMovies(userId: number): Promise<FavoriteMovie[]> {
-    const movies: FavoriteMovie[] = await this.movieRepository.findBy({
+    return this.movieRepository.findBy({
       user: { id: userId },
     });
-    return movies;
   }
 
   async addUserMovie(userId: number, movieId: number): Promise<FavoriteMovie> {

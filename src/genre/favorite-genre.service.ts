@@ -11,10 +11,9 @@ export class GenreService {
   ) {}
 
   async findUserGenres(userId: number): Promise<FavoriteGenre[]> {
-    const genres: FavoriteGenre[] = await this.genreRepository.findBy({
+    return this.genreRepository.findBy({
       user: { id: userId },
     });
-    return genres;
   }
 
   async addUserGenre(

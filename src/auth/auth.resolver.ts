@@ -11,7 +11,6 @@ export class AuthResolver {
     @Args('email', { type: () => String }) email: string,
     @Args('password', { type: () => String }) password: string,
   ) {
-    const optUser = await this.authService.login(email, password);
-    return optUser;
+    return this.authService.login(email, password);
   }
 }
