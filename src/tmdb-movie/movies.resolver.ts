@@ -8,6 +8,8 @@ import { MoviesResponse } from './types/MoviesResponse';
 import { MoviesResponseGQL } from './graphql-classes/MoviesResponseGQL';
 import { BaseMovieGQL } from './graphql-classes/BaseMovieGQL';
 import { BaseMovie } from './types/BaseMovie';
+import { GetMoviesArgs } from './args-types/GetMoviesArgs';
+import { GetFavoriteMoviesArgs } from './args-types/GetFavoriteMoviesArgs';
 
 @Resolver('Movies')
 export class MoviesResolver {
@@ -23,36 +25,25 @@ export class MoviesResolver {
 
   @Query(() => MoviesResponseGQL)
   async getMoviesByFilters(
-    @Args('language', { type: () => GraphQLString, nullable: true })
-    language?: Language,
-    @Args('genreIds', { type: () => [Int], nullable: true })
-    genreIds?: number[],
-    @Args('minCountVotes', { type: () => Int, nullable: true })
-    minCountVotes?: number,
-    @Args('releaseYear', { type: () => Int, nullable: true })
-    releaseYear?: number,
-    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args() args: GetMoviesArgs,
   ): Promise<MoviesResponse> {
     return await this.moviesService.getMoviesByFilters({
-      language,
-      genreIds,
-      minCountVotes,
-      releaseYear,
-      page,
+      language: args.language,
+      genreIds: args.genreIds,
+      minCountVotes: args.minCountVotes,
+      releaseYear: args.releaseYear,
+      page: args.page,
     });
   }
 
   @Query(() => MoviesResponseGQL)
   async getFavoriteMoviesByIds(
-    @Args('ids', { type: () => [Int] }) ids: number[],
-    @Args('language', { type: () => GraphQLString, nullable: true })
-    language?: Language,
-    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args() args: GetFavoriteMoviesArgs,
   ): Promise<MoviesResponse> {
     return await this.moviesService.getFavoriteMoviesByIds({
-      ids,
-      language,
-      page,
+      ids: args.ids,
+      language: args.language,
+      page: args.page,
     });
   }
 
