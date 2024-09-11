@@ -30,10 +30,10 @@ export class MovieResolver {
   }
 
   @Mutation(() => FavoriteMovie)
-  async toggleUserMovie(
+  async toggleWatchMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.movieService.toggleUserMovie(userId, movieId);
+    return await this.movieService.toggleWatchMovie(userId, movieId);
   }
 }

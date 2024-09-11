@@ -42,7 +42,7 @@ export class MovieService {
     return {success: false}
   }
 
-  async toggleUserMovie(
+  async toggleWatchMovie(
     userId: number,
     movieId: number,
   ): Promise<FavoriteMovie> {
