@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class BaseMovieGQL {
@@ -10,7 +10,7 @@ export class BaseMovieGQL {
   genreIds: number[];
   @Field()
   overview: string;
-  @Field((type) => Int)
+  @Field((type) => Float)
   popularity: number;
   @Field()
   posterPath: string;
@@ -18,7 +18,7 @@ export class BaseMovieGQL {
   releaseDate: string;
   @Field()
   title: string;
-  @Field((type) => Int)
+  @Field((type) => Float)
   voteAverage: number;
   @Field((type) => Int)
   voteCount: number;

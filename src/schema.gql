@@ -37,11 +37,11 @@ type BaseMovieGQL {
   backdropPath: String!
   genreIds: [Int!]!
   overview: String!
-  popularity: Int!
+  popularity: Float!
   posterPath: String!
   releaseDate: String!
   title: String!
-  voteAverage: Int!
+  voteAverage: Float!
   voteCount: Int!
 }
 
