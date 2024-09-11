@@ -13,20 +13,12 @@ export class MovieResolver {
     return await this.movieService.findUserMovies(userId);
   }
 
-  @Mutation(() => FavoriteMovie)
-  async addUserMovie(
-    @Args('userId', { type: () => Int }) userId: number,
-    @Args('movieId', { type: () => Int }) movieId: number,
-  ) {
-    return await this.movieService.addUserMovie(userId, movieId);
-  }
-
   @Mutation(() => MutationResult)
-  async removeUserMovie(
+  async toggleUserMovie(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('movieId', { type: () => Int }) movieId: number,
   ) {
-    return await this.movieService.removeUserMovie(userId, movieId);
+    return await this.movieService.toggleUserMovie(userId, movieId);
   }
 
   @Mutation(() => FavoriteMovie)

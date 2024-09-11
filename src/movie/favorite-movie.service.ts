@@ -17,29 +17,25 @@ export class MovieService {
     });
   }
 
-  async addUserMovie(userId: number, movieId: number): Promise<FavoriteMovie> {
-    const existingFavoriteMovie = await this.movieRepository.findOne({
-      where: { user: { id: userId }, movieId },
-    });
-    if (!existingFavoriteMovie) {
-      const newFavoriteMovie = this.movieRepository.create({
-        user: { id: userId },
-        movieId,
-        isWatched: false,
-      });
-      return await this.movieRepository.save(newFavoriteMovie);
-    }
-  }
-
-  async removeUserMovie(userId: number, movieId: number): Promise<MutationResult> {
+  async toggleUserMovie(
+    userId: number,
+    movieId: number,
+  ): Promise<MutationResult> {
     const existingFavoriteMovie = await this.movieRepository.findOne({
       where: { user: { id: userId }, movieId },
     });
     if (existingFavoriteMovie) {
       await this.movieRepository.delete({ movieId });
-      return {success: true};
+      return { success: true };
+    } else {
+      const newFavoriteMovie = this.movieRepository.create({
+        user: { id: userId },
+        movieId,
+        isWatched: false,
+      });
+      await this.movieRepository.save(newFavoriteMovie);
+      return { success: true };
     }
-    return {success: false}
   }
 
   async toggleWatchMovie(
@@ -49,10 +45,10 @@ export class MovieService {
     const existingFavoriteMovie = await this.movieRepository.findOne({
       where: { user: { id: userId }, movieId },
     });
-    if (existingFavoriteMovie) {
-      existingFavoriteMovie.isWatched = true;
-    } else {
+    if (existingFavoriteMovie.isWatched) {
       existingFavoriteMovie.isWatched = false;
+    } else {
+      existingFavoriteMovie.isWatched = true;
     }
     return await this.movieRepository.save(existingFavoriteMovie);
   }

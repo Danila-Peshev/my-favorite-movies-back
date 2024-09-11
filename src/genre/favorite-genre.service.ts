@@ -17,23 +17,7 @@ export class GenreService {
     });
   }
 
-  async addUserGenre(
-    userId: number,
-    genreId: number,
-  ): Promise<FavoriteGenre> {
-    const existingFavoriteGenre = await this.genreRepository.findOne({
-      where: { user: { id: userId }, genreId },
-    });
-    if (!existingFavoriteGenre) {
-      const newFavoriteGenre = this.genreRepository.create({
-        user: {id: userId},
-        genreId,
-      });
-      return await this.genreRepository.save(newFavoriteGenre);
-    }
-  }
-
-  async removeUserGenre(
+  async toggleUserGenre(
     userId: number,
     genreId: number,
   ): Promise<MutationResult> {
@@ -42,9 +26,14 @@ export class GenreService {
     });
     if (existingFavoriteGenre) {
       await this.genreRepository.delete({ genreId });
-      return {success: true};
+      return { success: true };
+    } else {
+      const newFavoriteGenre = this.genreRepository.create({
+        user: { id: userId },
+        genreId,
+      });
+      await this.genreRepository.save(newFavoriteGenre);
+      return { success: true };
     }
-    return {success: false}
   }
-
 }

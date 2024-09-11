@@ -63,9 +63,7 @@ type Query {
 }
 
 type Mutation {
-  addUserGenre(userId: Int!, genreId: Int!): FavoriteGenre!
-  removeUserGenre(userId: Int!, genreId: Int!): MutationResult!
-  addUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
-  removeUserMovie(userId: Int!, movieId: Int!): MutationResult!
-  toggleUserMovie(userId: Int!, movieId: Int!): FavoriteMovie!
+  toggleUserGenre(userId: Int!, genreId: Int!): MutationResult!
+  toggleUserMovie(userId: Int!, movieId: Int!): MutationResult!
+  toggleWatchMovie(userId: Int!, movieId: Int!): FavoriteMovie!
 }
