@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { HttpModule } from '@nestjs/axios';
+import { MoviesResolver } from './movies.resolver';
 
 const baseURL = process.env.TMDB_BASE_URL;
 
@@ -17,6 +18,6 @@ const headers = {
       timeout: 15000,
     }),
   ],
-  providers: [MoviesService],
+  providers: [MoviesService, MoviesResolver],
 })
 export class MoviesModule {}

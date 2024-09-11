@@ -6,6 +6,10 @@ import dataSourceOptions from './data-source-options.config';
 import { FavoriteGenreModule } from './genre/favorite-genre.module';
 import { FavoriteMovieModule } from './movie/favorite-movie.module';
 import { MoviesModule } from './tmdb-movie/movies.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,10 +21,15 @@ import { MoviesModule } from './tmdb-movie/movies.module';
       autoLoadEntities: true,
       synchronize: false,
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
     UserModule,
     FavoriteGenreModule,
     FavoriteMovieModule,
-    MoviesModule
+    MoviesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
