@@ -25,15 +25,14 @@ export class GenreService {
       where: { user: { id: userId }, genreId },
     });
     if (existingFavoriteGenre) {
-      await this.genreRepository.delete({ genreId });
-      return { success: true };
+      await this.genreRepository.delete({ genreId, user: { id: userId } });
     } else {
       const newFavoriteGenre = this.genreRepository.create({
         user: { id: userId },
         genreId,
       });
       await this.genreRepository.save(newFavoriteGenre);
-      return { success: true };
     }
+    return { success: true };
   }
 }

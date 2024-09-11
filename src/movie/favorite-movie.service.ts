@@ -25,8 +25,7 @@ export class MovieService {
       where: { user: { id: userId }, movieId },
     });
     if (existingFavoriteMovie) {
-      await this.movieRepository.delete({ movieId });
-      return { success: true };
+      await this.movieRepository.delete({ movieId, user: { id: userId } });
     } else {
       const newFavoriteMovie = this.movieRepository.create({
         user: { id: userId },
@@ -34,8 +33,8 @@ export class MovieService {
         isWatched: false,
       });
       await this.movieRepository.save(newFavoriteMovie);
-      return { success: true };
     }
+    return { success: true };
   }
 
   async toggleWatchMovie(
@@ -45,11 +44,8 @@ export class MovieService {
     const existingFavoriteMovie = await this.movieRepository.findOne({
       where: { user: { id: userId }, movieId },
     });
-    if (existingFavoriteMovie.isWatched) {
-      existingFavoriteMovie.isWatched = false;
-    } else {
-      existingFavoriteMovie.isWatched = true;
-    }
+    const isWatched = existingFavoriteMovie.isWatched;
+    existingFavoriteMovie.isWatched = !isWatched;
     return await this.movieRepository.save(existingFavoriteMovie);
   }
 }
