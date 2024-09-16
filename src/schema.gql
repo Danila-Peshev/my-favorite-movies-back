@@ -52,6 +52,12 @@ type MoviesResponseGQL {
   totalResult: Int!
 }
 
+type AuthResponse {
+  token: String!
+  userId: Int!
+  email: String!
+}
+
 type Query {
   getUserGenres(userId: Int!): [FavoriteGenre!]!
   getUserMovies(userId: Int!): [FavoriteMovie!]!
@@ -59,11 +65,11 @@ type Query {
   getMoviesByFilters(language: String, genreIds: [Int!], minCountVotes: Int, releaseYear: Int, page: Int): MoviesResponseGQL!
   getFavoriteMoviesByIds(ids: [Int!]!, language: String, page: Int): MoviesResponseGQL!
   getMovieById(id: Int!, language: String): BaseMovieGQL!
-  login(email: String!, password: String!): User!
 }
 
 type Mutation {
   toggleUserGenre(userId: Int!, genreId: Int!): MutationResult!
   toggleUserMovie(userId: Int!, movieId: Int!): MutationResult!
   toggleWatchMovie(userId: Int!, movieId: Int!): FavoriteMovie!
+  login(email: String!, password: String!): AuthResponse!
 }

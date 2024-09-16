@@ -1,12 +1,12 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { User } from 'src/user/user.entity';
+import { AuthResponse } from './gql-classes/AuthResponse';
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @Query(() => User)
+  @Mutation(() => AuthResponse)
   async login(
     @Args('email', { type: () => String }) email: string,
     @Args('password', { type: () => String }) password: string,
