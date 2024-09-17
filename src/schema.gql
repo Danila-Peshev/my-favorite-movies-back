@@ -59,8 +59,6 @@ type MoviesResponseGQL {
 
 type AuthResponse {
   token: String!
-  userId: Int!
-  email: String!
 }
 
 type Query {
