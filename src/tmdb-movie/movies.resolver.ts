@@ -10,11 +10,14 @@ import { BaseMovieGQL } from './graphql-classes/BaseMovieGQL';
 import { BaseMovie } from './types/BaseMovie';
 import { GetMoviesArgs } from './args-types/GetMoviesArgs';
 import { GetFavoriteMoviesArgs } from './args-types/GetFavoriteMoviesArgs';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 
 @Resolver('Movies')
 export class MoviesResolver {
   constructor(private moviesService: MoviesService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [GenreGQL])
   async getAllGenres(
     @Args('language', { type: () => GraphQLString, nullable: true })
@@ -23,6 +26,7 @@ export class MoviesResolver {
     return await this.moviesService.getAllGenres({ language });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => MoviesResponseGQL)
   async getMoviesByFilters(
     @Args() args: GetMoviesArgs,
@@ -36,6 +40,7 @@ export class MoviesResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => MoviesResponseGQL)
   async getFavoriteMoviesByIds(
     @Args() args: GetFavoriteMoviesArgs,
@@ -47,6 +52,7 @@ export class MoviesResolver {
     });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => BaseMovieGQL)
   async getMovieById(
     @Args('id', { type: () => Int }) id: number,
